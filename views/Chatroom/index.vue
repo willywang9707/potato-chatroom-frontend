@@ -1,7 +1,9 @@
 <script setup>
 import { ref, computed } from "vue";
+import { useI18n } from 'vue-i18n'
 import data from "./dummyData/data";
 
+const { t } = useI18n()
 const userId = ref('2');
 
 const convertedMessage = computed(() => {
@@ -19,7 +21,7 @@ const convertedMessage = computed(() => {
 <template>
   <div class="chatroom">
     <div class="chatroom-name">
-      <p>公共聊天室</p>
+      <p>{{ t("chatroom.publicChatroom") }}</p>
     </div>
     <div class="chatroom-content">
       <div class="chatroom-content__message-list">
