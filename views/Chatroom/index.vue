@@ -1,21 +1,18 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
+import moment from "moment";
 import data from "./dummyData/data";
 
-const { t } = useI18n()
-const userId = ref('2');
+const { t } = useI18n();
+const userId = ref("2");
 
 const convertedMessage = computed(() => {
-  return data.map(message => {
-    const date = new Date(message.time);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const timeString = `${hours}:${minutes}`;
+  return data.map((message) => {
+    const timeString = moment(message.time).format("LT");
     return { ...message, timeString };
-  })
-})
-
+  });
+});
 </script>
 
 <template>
@@ -31,14 +28,22 @@ const convertedMessage = computed(() => {
           class="chatroom-content__message-item"
         >
           <div
-            :class="{ 'chatroom-content__message-item-user': message.sender === userId, 'chatroom-content__message-item-others': message.sender !== userId }"
+            :class="{
+              'chatroom-content__message-item-user': message.sender === userId,
+              'chatroom-content__message-item-others':
+                message.sender !== userId,
+            }"
           >
             <div class="chatroom-content__message-item-content">
               {{ message.message }}
             </div>
             <div class="chatroom-content__message-item-info">
-              <span class="chatroom-content__message-item-time">{{ message.isRead ? '已讀' : '' }}</span>
-              <span class="chatroom-content__message-item-time">{{ message.timeString }}</span>
+              <span class="chatroom-content__message-item-time">{{
+                message.isRead ? "已讀" : ""
+              }}</span>
+              <span class="chatroom-content__message-item-time">{{
+                message.timeString
+              }}</span>
             </div>
           </div>
         </div>
@@ -109,7 +114,6 @@ const convertedMessage = computed(() => {
 
       &-others &-content {
         background-color: #555;
-
       }
 
       &-content {
