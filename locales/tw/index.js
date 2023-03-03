@@ -4,4 +4,4 @@ const zhTw = {
   },
 };
 
-export default zhTw
+export default zhTw;

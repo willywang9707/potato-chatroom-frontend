@@ -1,11 +1,9 @@
 <script setup>
-import Chatroom from '../views/Chatroom/index.vue';
+import Chatroom from "../views/Chatroom/index.vue";
 </script>
 
 <template>
-  <Chatroom/>
+  <Chatroom />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

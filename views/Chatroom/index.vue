@@ -25,9 +25,14 @@ const convertedMessage = computed(() => {
     </div>
     <div class="chatroom-content">
       <div class="chatroom-content__message-list">
-        <div v-for="message in convertedMessage" class="chatroom-content__message-item">
+        <div
+          v-for="message in convertedMessage"
+          :key="message.id"
+          class="chatroom-content__message-item"
+        >
           <div
-            :class="{ 'chatroom-content__message-item-user': message.sender === userId, 'chatroom-content__message-item-others': message.sender !== userId }">
+            :class="{ 'chatroom-content__message-item-user': message.sender === userId, 'chatroom-content__message-item-others': message.sender !== userId }"
+          >
             <div class="chatroom-content__message-item-content">
               {{ message.message }}
             </div>
@@ -39,7 +44,9 @@ const convertedMessage = computed(() => {
         </div>
       </div>
     </div>
-    <div class="chatroom-input-box">輸入框</div>
+    <div class="chatroom-input-box">
+      輸入框
+    </div>
   </div>
 </template>
 

@@ -5,7 +5,7 @@ const data = [
     chatroomID: "777",
     message: "hello",
     isRead: false,
-    time: 1234214214124
+    time: 1234214214124,
   },
   {
     sender: "1",
@@ -13,7 +13,7 @@ const data = [
     chatroomID: "777",
     message: "今天過得好嗎",
     isRead: false,
-    time: 1234214214124
+    time: 1234214214124,
   },
   {
     sender: "2",
@@ -21,8 +21,8 @@ const data = [
     chatroomID: "777",
     message: "還不錯",
     isRead: false,
-    time: 1234214214124
+    time: 1234214214124,
   },
 ];
 
-export default data
+export default data;
