@@ -1,6 +1,6 @@
-import Chatroom from "../views/Chatroom/index.vue";
+import ChatRoom from "../views/ChatRoom/index.vue";
 
-const routes = [{ path: "/", component: Chatroom }];
+const routes = [{ path: "/", component: ChatRoom }];
 
 const router = VueRouter.createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.

@@ -1,3 +1,11 @@
+<script>
+  export default {
+    name: 'ChatRoom',
+    inheritAttrs: false,
+    customOptions: {},
+  }
+</script>
+
 <script setup>
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
