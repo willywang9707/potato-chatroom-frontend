@@ -2,40 +2,85 @@
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
-import data from "./dummyData/data";
+import { messageData as data, chatroomData, userInfo as userData } from "./dummyData/data";
 
+const messageInfo = ref(data);
 const { t } = useI18n();
-const userId = ref("2");
 
-const convertedMessage = computed(() => {
-  return data.map((message) => {
-    const timeString = moment(message.time).format("LT");
+const userInfo = ref(userData)
+
+const processedMessage = computed(() => {
+  return messageInfo.value.map((message, i, arr) => {
+    if (
+      message.sender !== arr[i - 1]?.sender &&
+      message.sender !== userInfo.value.id
+    ) {
+      message.isShowAvatar = true;
+    } else {
+      message.isShowAvatar = false;
+    }
+
+    const timeString = moment(message.sendTime).format("LT");
     return { ...message, timeString };
   });
 });
+
+const handleSendMessage = (event) => {
+  event.preventDefault();
+
+  if (!messageInput.value?.trim() || !messageInput.value) {
+    return;
+  }
+
+  const requestData = {
+    sender: userInfo.value.id,
+    receiver: "1",
+    chatroomID: chatroomData.id,
+    messageContent: messageInput.value,
+    isRead: false,
+    sendTime: Date.now(),
+    avatar: "蕃薯",
+  };
+
+  messageInfo.value.push(requestData);
+  messageInput.value = "";
+};
+
+const messageInput = ref(null);
 </script>
 
 <template>
   <div class="chatroom">
     <div class="chatroom-name">
-      <p>{{ t("chatroom.publicChatroom") }}</p>
+      <p>{{ chatroomData.name }}</p>
     </div>
+
     <div class="chatroom-content">
       <div class="chatroom-content__message-list">
         <div
-          v-for="message in convertedMessage"
+          v-for="message in processedMessage"
           :key="message.id"
           class="chatroom-content__message-item"
         >
           <div
             :class="{
-              'chatroom-content__message-item-user': message.sender === userId,
+              'chatroom-content__message-item-user': message.sender === userInfo.id,
               'chatroom-content__message-item-others':
-                message.sender !== userId,
+                message.sender !== userInfo.id,
             }"
           >
+            <div
+              :class="{
+                'chatroom-content__avatar': message.isShowAvatar,
+                'chatroom-content__avatar-space': !message.isShowAvatar,
+              }"
+            >
+              <p v-if="message.isShowAvatar">
+                {{ message.avatar.charAt(0) }}
+              </p>
+            </div>
             <div class="chatroom-content__message-item-content">
-              {{ message.message }}
+              {{ message.messageContent }}
             </div>
             <div class="chatroom-content__message-item-info">
               <span class="chatroom-content__message-item-time">{{
@@ -50,7 +95,12 @@ const convertedMessage = computed(() => {
       </div>
     </div>
     <div class="chatroom-input-box">
-      輸入框
+      <textarea
+        id=""
+        v-model="messageInput"
+        name=""
+        @keydown.enter="handleSendMessage"
+      />
     </div>
   </div>
 </template>
@@ -61,22 +111,26 @@ const convertedMessage = computed(() => {
   height: inherit;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+
 
   &-name {
-    font-size: 2rem;
+    font-size: 2.4rem;
     height: 10%;
     border-bottom: 1px solid #464749;
     display: flex;
     align-items: center;
-    padding: 1em;
+    padding: calc((1em / 1.5));
     font-weight: 700;
   }
 
   &-content {
-    font-size: 1rem;
-    padding: 2em;
-    flex-grow: 1;
+    font-size: 1.6rem;
+    padding: 1em;
+    height: 70%;
     border-bottom: 1px solid #464749;
+    max-height: 70%;
+    overflow: auto;
 
     &__message-list {
       gap: 8px;
@@ -95,7 +149,7 @@ const convertedMessage = computed(() => {
       &-others {
         font-size: 1.2rem;
         display: flex;
-        gap: 0.6em;
+        gap: 0.7em;
         align-items: flex-end;
       }
 
@@ -116,6 +170,21 @@ const convertedMessage = computed(() => {
         background-color: #555;
       }
 
+      &-others .chatroom-content__avatar {
+        background: rgb(190, 126, 8);
+        width: 2em;
+        height: 2em;
+        border-radius: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-start;
+
+        &-space {
+          width: 2em;
+        }
+      }
+
       &-content {
         font-size: 1.6rem;
         border-radius: 6px;
@@ -125,6 +194,7 @@ const convertedMessage = computed(() => {
       &-info {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
       }
     }
   }
@@ -132,6 +202,20 @@ const convertedMessage = computed(() => {
   &-input-box {
     font-size: 1rem;
     height: 20%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    & textarea {
+      width: 100%;
+      height: calc(100%);
+      padding: 1em;
+      font-size: 1.6rem;
+      outline: none;
+      white-space: nowrap;
+      resize: none;
+      vertical-align: bottom;
+    }
   }
 }
 </style>
