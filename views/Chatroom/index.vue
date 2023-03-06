@@ -1,21 +1,25 @@
 <script>
-  export default {
-    name: 'ChatRoom',
-    inheritAttrs: false,
-    customOptions: {},
-  }
+export default {
+  name: "ChatRoom",
+  inheritAttrs: false,
+  customOptions: {},
+};
 </script>
 
 <script setup>
 import { ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
-import { messageData as data, chatroomData, userInfo as userData } from "./dummyData/data";
+import {
+  messageData as data,
+  chatroomData,
+  userInfo as userData,
+} from "./dummyData/data";
 
 const messageInfo = ref(data);
 const { t } = useI18n();
 
-const userInfo = ref(userData)
+const userInfo = ref(userData);
 
 const processedMessage = computed(() => {
   return messageInfo.value.map((message, i, arr) => {
@@ -72,7 +76,8 @@ const messageInput = ref(null);
         >
           <div
             :class="{
-              'chatroom-content__message-item--user': message.sender === userInfo.id,
+              'chatroom-content__message-item--user':
+                message.sender === userInfo.id,
               'chatroom-content__message-item--others':
                 message.sender !== userInfo.id,
             }"
@@ -92,7 +97,7 @@ const messageInput = ref(null);
             </div>
             <div class="chatroom-content__message-info">
               <span class="chatroom-content__message-info--read">{{
-                message.isRead ? `${t('chatroom.read')}` : ""
+                message.isRead ? `${t("chatroom.read")}` : ""
               }}</span>
               <span class="chatroom-content__message-info--time">{{
                 message.timeString
@@ -120,7 +125,6 @@ const messageInput = ref(null);
   display: flex;
   flex-direction: column;
   overflow: auto;
-
 
   &-name {
     font-size: 2.4rem;
@@ -165,16 +169,12 @@ const messageInput = ref(null);
         flex-direction: row-reverse;
       }
 
-      &-time {
-        color: #555;
-      }
-
-      &--user &-content {
+      &--user .chatroom-content__message-content {
         background-color: #fea634;
         color: #555;
       }
 
-      &--others &-content {
+      &--others .chatroom-content__message-content {
         background-color: #555;
       }
 
@@ -192,17 +192,23 @@ const messageInput = ref(null);
           width: 2em;
         }
       }
+    }
 
-      &-content {
-        font-size: 1.6rem;
-        border-radius: 6px;
-        padding: 0.6em 0.8em;
+    &__message-content {
+      font-size: 1.6rem;
+      border-radius: 6px;
+      padding: 0.6em 0.8em;
+    }
+
+    &__message-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      &--time {
+        color: #555;
       }
-
-      &-info {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      &--read {
+        color: #555;
       }
     }
   }
