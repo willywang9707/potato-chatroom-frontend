@@ -72,8 +72,8 @@ const messageInput = ref(null);
         >
           <div
             :class="{
-              'chatroom-content__message-item-user': message.sender === userInfo.id,
-              'chatroom-content__message-item-others':
+              'chatroom-content__message-item--user': message.sender === userInfo.id,
+              'chatroom-content__message-item--others':
                 message.sender !== userInfo.id,
             }"
           >
@@ -87,14 +87,14 @@ const messageInput = ref(null);
                 {{ message.avatar.charAt(0) }}
               </p>
             </div>
-            <div class="chatroom-content__message-item-content">
+            <div class="chatroom-content__message-content">
               {{ message.messageContent }}
             </div>
-            <div class="chatroom-content__message-item-info">
-              <span class="chatroom-content__message-item-time">{{
-                message.isRead ? "已讀" : ""
+            <div class="chatroom-content__message-info">
+              <span class="chatroom-content__message-info--read">{{
+                message.isRead ? `${t('chatroom.read')}` : ""
               }}</span>
-              <span class="chatroom-content__message-item-time">{{
+              <span class="chatroom-content__message-info--time">{{
                 message.timeString
               }}</span>
             </div>
@@ -153,15 +153,15 @@ const messageInput = ref(null);
       flex-direction: column;
       gap: 0.5em;
 
-      &-user,
-      &-others {
+      &--user,
+      &--others {
         font-size: 1.2rem;
         display: flex;
         gap: 0.7em;
         align-items: flex-end;
       }
 
-      &-user {
+      &--user {
         flex-direction: row-reverse;
       }
 
@@ -169,16 +169,16 @@ const messageInput = ref(null);
         color: #555;
       }
 
-      &-user &-content {
+      &--user &-content {
         background-color: #fea634;
         color: #555;
       }
 
-      &-others &-content {
+      &--others &-content {
         background-color: #555;
       }
 
-      &-others .chatroom-content__avatar {
+      &--others .chatroom-content__avatar {
         background: rgb(190, 126, 8);
         width: 2em;
         height: 2em;
