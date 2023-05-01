@@ -1,0 +1,44 @@
+.login-page {
+  border: 1px solid #ccc;
+  padding: 2rem;
+  
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__label {
+    font-size: 1.2rem;
+  }
+
+  &__input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    background-color: #0077ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #005bd1;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
